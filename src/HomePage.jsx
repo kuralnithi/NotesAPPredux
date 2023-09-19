@@ -5,10 +5,9 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './TasksPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+import { faListCheck, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 
-import React, { useState } from 'react';
-import { useNotes } from '.Context/NotesContext';
-import { useTasks } from './Context/TasksContext';
 
 
 
@@ -25,8 +24,10 @@ function HomePage(props) {
     const [inptxt, setInptxt] = useState('')
     const [inptxt2, setInptxt2] = useState('')
 
-    const { notes, addNote, deleteNote } = useNotes();
-    const { tasks, addTask, deleteTask } = useTasks();
+
+
+    const DispBoxVal = useSelector((state) => state.NotesPageReducer)
+    
 
     //////////////////////////////////////
     const handleChange = (e) => {

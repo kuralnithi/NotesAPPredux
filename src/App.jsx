@@ -1,4 +1,7 @@
 import React from 'react';
+import Home from './Componenta/Home';
+import { store } from './Features/NotesStore';
+import { Provider } from 'react-redux';
 import NotesPage from './Componenta/NotesPage';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +10,6 @@ import { Link, Route, Routes } from 'react-router-dom';
 import TasksPage from './TasksPage';
 import HomePage from './HomePage';
 
-import { NotesProvider, TasksProvider } from './Context';
 
 
 function App(props) {
@@ -20,10 +22,10 @@ function App(props) {
 
                     <nav className='sidebarm  p-2  mlg' >
                         <div className='my-5 li  con'>
-                            <span className="my-5   fs-1    brand-name ">
-
-                                <FontAwesomeIcon icon={faUser} />
-
+                            <span className="mx-2 text-center  fs-1    brand-name ">
+                                
+                                <FontAwesomeIcon icon={faUserLarge} />
+                                
                                 Kural</span>
 
 
@@ -87,22 +89,19 @@ function App(props) {
                 <div className='container-fluid notesmainbox  col-9 '>
 
 
-                    <NotesProvider>
-                        <TasksProvider>
-                            <div className="App">
-                                {/* Your navigation and routing setup */}
-                                {/* Example: */}
-                                {/* <Link to="/">Home</Link> */}
-                                {/* <Link to="/notes">Notes</Link> */}
-                                {/* <Link to="/tasks">Tasks</Link> */}
+                    <Provider store={store}>
 
-                                {/* Define your routes */}
-                                {/* <Route path="/" exact component={HomePage} /> */}
-                                {/* <Route path="/notes" component={NotesPage} /> */}
-                                {/* <Route path="/tasks" component={TasksPage} /> */}
-                            </div>
-                        </TasksProvider>
-                    </NotesProvider>
+                        <Routes>
+
+                            <Route path='/NotesPage' element={<NotesPage />} />
+                            <Route path='/TasksPage' element={<TasksPage /> } />
+                            <Route path='/' element={<HomePage /> } />
+
+                        </Routes>
+
+                    </Provider>
+
+
                 </div>
             </div>
 
