@@ -10,8 +10,10 @@ function TasksPage() {
     const [taskText, setTaskText] = useState('');
     const [taskTitle, setTaskTitle] = useState('');
     const taskList = useSelector((state) => state.tasks);
-    const dispatch = useDispatch();
+    let [isdisplay, setIsdisplay] = useState(false);
 
+
+    const dispatch = useDispatch();
     const handleTaskTextChange = (e) => {
         setTaskText(e.target.value);
     };
@@ -21,7 +23,13 @@ function TasksPage() {
     };
 
     const handleAddTask = () => {
-        if (taskText.trim() !== '' && taskTitle.trim() !== '') {
+        
+        if (taskText.length == 0 && taskTitle.length == 0) {
+            setIsdisplay(true);
+            setTimeout(() => { setIsdisplay(false) }, 2000);
+        }
+
+        if (taskText.trim() !== '' || taskTitle.trim() !== '') {
             const newTask = {
                 id: uuidv4(),
                 title: taskTitle,
@@ -58,7 +66,8 @@ function TasksPage() {
                             value={taskText}
                             onChange={handleTaskTextChange}
                         />
-                        <button className='taskbtn mt-3' onClick={handleAddTask}>Add</button>
+
+                        <button className='taskbtn mt-3' onClick={handleAddTask}>Add</button> <span style={{ display: isdisplay ? "block" : "none" }} className='text-danger'>Give input</span>
                     </div>
                 </div>
 
@@ -78,8 +87,6 @@ function TasksPage() {
                             <div
                                 className={`task-checkbox  ${task.completed ? 'checked' : ''}`}
                                 onClick={() => {
-                                    // Toggle the completion status of the task
-                                    // Dispatch an action to update the task
                                 }}
                             ></div>
                             <div className="task-content">

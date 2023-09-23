@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './TasksPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
-import { faListCheck, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { faListCheck, faNoteSticky, faPenClip, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { deleteNote } from './Features/NotesSlice';
 
 
 
@@ -24,10 +25,15 @@ function HomePage(props) {
     const [inptxt, setInptxt] = useState('')
     const [inptxt2, setInptxt2] = useState('')
 
-
+    const [editmode, setEditmode] = useState(false);
+    const [editedTitle, setEditedtitle] = useState('');
+    const [editedContent, setEditedcontent] = useState('');
+    const [editId, setEditid] = useState('');
 
     const DispBoxVal = useSelector((state) => state.NotesPageReducer)
-    
+    const dispatch = useDispatch()
+
+
 
     //////////////////////////////////////
     const handleChange = (e) => {
@@ -38,6 +44,9 @@ function HomePage(props) {
 
 
     }
+
+
+    /////////////////////
 
     const handleChange2 = (e) => {
 
@@ -61,7 +70,7 @@ function HomePage(props) {
             content2: inptxt2
 
         }
-        addNote(data)
+        dispatch(addNote(data))
 
 
         console.log(data)
@@ -74,7 +83,98 @@ function HomePage(props) {
     ////////////////////////////////////
 
     const handleDelete = (id) => {
-        deleteNote(id);
+        dispatch(deleteNote(id));
+    }
+
+    ///////////////////////
+
+
+    const handleEdit = (id) => {
+
+        if (editmode == true) {
+            setEditmode(false)
+        }
+
+        else {
+            console.log(id);
+            setEditmode(true);
+            setEditid(id);
+
+            DispBoxVal.map((obj) => {
+
+                if (obj.id == id) {
+
+
+                    setEditedtitle(obj.content1);
+                    setEditedcontent(obj.content2);
+                    console.log(editedTitle);
+                    return obj;
+                }
+                else
+                    return obj;
+
+            })
+
+
+
+
+        }
+
+        const contentInparr = useSelector((state) => state.NotesPageReducer.map(obj => {
+
+            if (obj.id == id) {
+
+
+                setEditedtitle(obj.content2);
+
+                return obj;
+            }
+            else
+                return obj;
+
+        }
+
+
+        ));
+
+
+
+
+    }
+
+
+    /////////////////////
+
+
+
+    const handleSave = () => {
+        setEditmode(false);
+
+
+        const editData = {
+            id: editId,
+            Econtent1: editedTitle,
+            Econtent2: editedContent
+        }
+        console.log(editData);
+
+        dispatch(editNote(editData));
+
+        setEditedtitle('');
+        setEditedcontent('');
+    }
+
+
+
+
+    ///////////////////////////////////////////////
+
+
+    const handleCancel = () => {
+
+
+        setEditmode(false);
+
     }
 
 
@@ -85,7 +185,9 @@ function HomePage(props) {
 
 
 
-    ////////////////////////////////////////////////////////
+
+
+
     const [taskText, setTaskText] = useState('');
     const [taskTitle, setTaskTitle] = useState('');
     const taskList = useSelector((state) => state.tasks);
@@ -107,21 +209,15 @@ function HomePage(props) {
                 completed: false,
             };
 
-            addNote(data)
+            dispatch(addTask(newTask));
             setTaskText('');
             setTaskTitle('');
         }
     };
 
-
     const handleDeleteTask = (taskId) => {
-        deleteTask(taskId);
+        dispatch(deleteTask(taskId));
     };
-
-
-
-
-
 
 
 
@@ -133,24 +229,30 @@ function HomePage(props) {
 
 
         <div>
-
+            <h1 className='mt-3 welcometxt'>Welcome kural</h1>
             <div className='display-container mt-5'>
-                <h1 className='mynotes'>WELCOME KURAL</h1>
-
-
-                <h2 className='mynotes mt-5'> <FontAwesomeIcon icon={faNoteSticky} /> My Notes</h2>
+                <h1 className='mynotes'> <FontAwesomeIcon icon={faNoteSticky} /> My Notes</h1>
 
                 {DispBoxVal.length > 0 ? (
                     <div className="card-container horizontal-card-list mt-1">
                         {DispBoxVal.map((BoxVal) => (
                             <div key={BoxVal.id} className="card">
                                 <div className="card-body">
-                                    <h1 className='addnotetxt'> {BoxVal.content1}</h1>
+
+                                    <div className="card-title">
+                                        <h5 className='addnotetxt  '> {BoxVal.content1}</h5>
+
+                                        <div className='btnicons '><FontAwesomeIcon icon={faPenClip} onClick={() => { handleEdit(BoxVal.id) }} />
+                                            <button className="deletebtn" onClick={() => { handleDelete(BoxVal.id) }}>
+                                                <FontAwesomeIcon icon={faTrashCan} />   </button>   </div>
+
+                                    </div>
+
                                     <div className='card-content'>
+
                                         <p className='addnotetxt'>  {BoxVal.content2}</p>
 
-                                        <button className="deletebtn" onClick={() => { handleDelete(BoxVal.id) }}>
-                                            <FontAwesomeIcon icon={faTrashCan} />   </button></div>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -160,7 +262,24 @@ function HomePage(props) {
                 )}
             </div>
 
+            {editmode ? (
 
+                <div className="editBox">
+
+
+                    <input className='form-control form-control-sm' type="text" value={editedTitle} onChange={(e) => { setEditedtitle(e.target.value) }} placeholder='Edit title' />
+
+                    <textarea rows={4} className='form-control form-control-sm mt-3 mb-3' type="text" value={editedContent} onChange={(e) => { setEditedcontent(e.target.value) }} placeholder='Edit content' />
+
+                    <button type='button' className='btn     btn-success btn-sm  mx-2' onClick={handleSave}>save</button>
+                    <button className='btn btn-sm btn-warning mx-2' onClick={handleCancel}>cancel</button>
+
+
+
+                </div>
+
+
+            ) : ""}
 
 
 

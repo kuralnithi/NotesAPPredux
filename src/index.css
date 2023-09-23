@@ -13,7 +13,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    height: 123%;
+    height: 177vh;
 
 }
 
@@ -55,6 +55,20 @@
 .card-body {
     scrollbar-width: thin;
     scrollbar-color: red;
+}
+
+.btnicons {
+    display: flex;
+    width: 40%;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .card-content {
@@ -186,7 +200,10 @@
     scrollbar-color: #0B63F8 transparent;
     height: 890px;
 }
-
+.welcometxt{
+    color:#203562;
+    font-size: 3em;
+}
 
 
 
@@ -220,18 +237,14 @@
         max-height: 100vh;
     }
 
-    .sidebox::-webkit-scrollbar {
-        width: 5px;
-    }
-
     .sidebox::-webkit-scrollbar-thumb {
-        background-color: grey;
-        border-radius: 5px;
+
+        border-radius: 2px;
+        background-color: #0B63F8;
     }
 
     .sidebox {
         scrollbar-width: thin;
-        scrollbar-color: #0B63F8 transparent;
         height: 960px;
     }
 
@@ -242,4 +255,25 @@
     }
 
 
+}
+
+
+
+
+a:hover{
+color:#F5F5F5;
+    background-color:#203562;
+    border-radius: 10px;
+}
+
+
+
+
+input{
+
+outline:none;
+}
+
+.btnicons{
+    cursor: pointer;
 }

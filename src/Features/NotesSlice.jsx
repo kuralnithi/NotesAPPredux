@@ -1,10 +1,13 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const notesSlice = createSlice({
 
     name: 'notes',
     initialState: [],
+
+
 
     reducers: {
         addNote: (state, action) => {
@@ -12,17 +15,30 @@ const notesSlice = createSlice({
         },
 
         editNote: (state, action) => {
-            const { id, content } = action.payload;
-            const noteToEdit = state.find((note) => note.id === id);
+            const { id, Econtent1, Econtent2 } = action.payload;
+            const noteToEdit = state.map((note) => {
 
-            if (noteToEdit) {
-                noteToEdit.content = content;
-            }
 
+                if (note.id === id) {
+                    return {
+                        ...note,
+                        content1: Econtent1,
+                        content2: Econtent2
+                    }
+                }
+                else
+                    return note;
+
+            });
+
+            return noteToEdit;
         },
 
         deleteNote: (state, action) => {
             const idToDelete = action.payload;
+
+
+
             return state.filter((note) => note.id !== idToDelete);
         },
     },

@@ -1,84 +1,109 @@
-import { faNoteSticky, faPenClip, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+
+
+
+
+
 import { useDispatch, useSelector } from 'react-redux';
-
-import { v4 as uuidv4 } from 'uuid';
 import { addNote, deleteNote, editNote } from '../Features/NotesSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faNoteSticky, faPenClip, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 
 
-function NotesPage(props) {
+
+function SearchPage(props) {
+
+    const [SearchInp, setSearchInp] = useState('');
+
+    // const [itemToSearch, setItemToSearch] = useState('');
 
 
-    
+    const DispBoxVal = useSelector((state) => state.NotesPageReducer)
 
-    const [inptxt, setInptxt] = useState('')
-    const [inptxt2, setInptxt2] = useState('')
-    
+    const [SearchList, setSearchList] = useState([]);
+
+    console.log(DispBoxVal);
+    console.log(SearchInp)
+
+
     const [editmode, setEditmode] = useState(false);
     const [editedTitle, setEditedtitle] = useState('');
     const [editedContent, setEditedcontent] = useState('');
     const [editId, setEditid] = useState('');
 
-    const DispBoxVal = useSelector((state) => state.NotesPageReducer)
     const dispatch = useDispatch()
 
-    //////////////////////////////////////
-    const handleChange = (e) => {
 
 
-        setInptxt(e.target.value);
 
+
+
+
+
+
+
+
+
+    const handleChangeSearch = (e) => {
+
+
+        setSearchInp(e.target.value)
+
+
+        console.log(SearchInp);
 
 
     }
 
 
-    /////////////////////
-
-    const handleChange2 = (e) => {
+    const handleSearchClick = () => {
 
 
-        setInptxt2(e.target.value);
 
+        setSearchList(DispBoxVal.filter((obj) => {
+
+            return obj.content1.toLowerCase().includes(SearchInp.toLowerCase());
+
+
+        }))
+        console.log(SearchList);
 
 
     }
 
-    ///////////////////////////////////////
+    // const handleSearchClick = () => {
+
+    //     setItemToSearch(SearchInp);
+
+    // }
 
 
 
 
-    const handleClick = () => {
-
-        const data = {
-            id: uuidv4(),
-            content1: inptxt,
-            content2: inptxt2
-
-        }
-        dispatch(addNote(data))
 
 
-        console.log(data)
 
-        setInptxt('')
-        setInptxt2('')
 
-    }
 
-    ////////////////////////////////////
+
+
 
     const handleDelete = (id) => {
-        
         dispatch(deleteNote(id));
-
-
     
 
+        setSearchList(DispBoxVal.filter((obj) => {
+
+            return obj.content1.toLowerCase().includes(SearchInp.toLowerCase());
+
+
+        }))
+
+
     }
+
+
 
     ///////////////////////
 
@@ -154,6 +179,23 @@ function NotesPage(props) {
 
         dispatch(editNote(editData));
 
+
+
+
+
+
+
+        setSearchList(DispBoxVal.filter((obj) => {
+
+            return obj.content1.toLowerCase().includes(SearchInp.toLowerCase());
+
+
+        }))
+
+
+
+
+
         setEditedtitle('');
         setEditedcontent('');
     }
@@ -172,39 +214,44 @@ function NotesPage(props) {
     }
 
 
+
+
+
+
     return (
+        <div>
 
-        <div className=' addnoteboxmain container-fluid mt-5'>
-            <div className='addnotebox container-fluid '>
-
-                <h1 >Add a Note</h1>
-
-                <input className='addnotetxtbox' type="text" placeholder='Title' value={inptxt} onChange={handleChange} />
-                <input type="text" placeholder='Take a note...' value={inptxt2} onChange={handleChange2} className='mt-2 addnotetxtbox2' />
+            <h1 className='searchtxt mx-2 mt-3'>SEARCH NOTES</h1>
 
 
-                <div className='timeclickbox'>
+            <div className=" col-10 col-sm-9 col-md-8 col-lg-8 mt-3 mx-4 d-flex ">
+                <input onChange={(e) => handleChangeSearch(e)} value={SearchInp} type="text" className='form-control form-control-sm py-2' placeholder='search by title...' />
 
 
-
-                    <button className='addclick mt-3' onClick={handleClick}>Add</button>
-
-                    <button className='remtime mt-5 mb-2'> Today,10:10 AM</button>
-
-
-
-                </div>
-
-
+                <button onClick={handleSearchClick} className='btn  btn-primary mx-2'>search</button>
 
             </div>
 
-            <div className='display-container mt-5'>
-                <h1 className='mynotes'> <FontAwesomeIcon icon={faNoteSticky} /> My Notes</h1>
 
-                {DispBoxVal.length > 0 ? (
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div className='display-container mt-5'>
+                <h1 className='mynotes'> <FontAwesomeIcon icon={faNoteSticky} /> Notes LIST</h1>
+
+                {SearchList.length > 0 ? (
                     <div className="card-container horizontal-card-list mt-1">
-                        {DispBoxVal.map((BoxVal) => (
+                        {SearchList.map((BoxVal) => (
                             <div key={BoxVal.id} className="card">
                                 <div className="card-body">
 
@@ -250,8 +297,16 @@ function NotesPage(props) {
 
             ) : ""}
 
+
+
+
+
+
+
+
+
         </div>
     );
 }
 
-export default NotesPage;
+export default SearchPage;
