@@ -56,12 +56,12 @@ function App(props) {
                                     <FontAwesomeIcon icon={faListCheck} />
                                     <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{`Tasks`}</span></Link>
 
-                                <a href="" className=" mt-5 fs-4 list-group-item  py2">
+                                <a href="/" className=" mt-5 fs-4 list-group-item  py2">
 
                                     <FontAwesomeIcon icon={faBoxArchive} />
                                     <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{"Archive"}</span></a>
 
-                                <a href="" className="mt-5 fs-4 list-group-item  py2">
+                                <a href="/" className="mt-5 fs-4 list-group-item  py2">
 
                                     <FontAwesomeIcon icon={faTrashCan} />
                                     <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{"Bin"}</span></a>
