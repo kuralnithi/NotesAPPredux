@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask, deleteTask } from './Features/TaskSlice';
+import { addTask, deleteTask, getTask, updateTask } from './Features/TaskSlice';
 import { v4 as uuidv4 } from 'uuid';
 import './TasksPage.css';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -30,11 +30,13 @@ function TasksPage() {
         }
 
         if (taskText.trim() !== '' || taskTitle.trim() !== '') {
+           
             const newTask = {
+           
                 id: uuidv4(),
                 title: taskTitle,
                 text: taskText,
-                completed: false,
+                completed: false         
             };
 
             dispatch(addTask(newTask));
@@ -46,6 +48,12 @@ function TasksPage() {
     const handleDeleteTask = (taskId) => {
         dispatch(deleteTask(taskId));
     };
+
+
+    useEffect(()=>{
+dispatch(getTask())
+
+    },[])
 
     return (
         <div className="Tasks container-fluid">
@@ -86,10 +94,9 @@ function TasksPage() {
                         <div key={task.id} className="mt-4 task-item">
                             <div
                                 className={`task-checkbox  ${task.completed ? 'checked' : ''}`}
-                                onClick={() => {
-                                }}
+                                onClick={task.completed == 0 ?  () =>dispatch(updateTask({id:task.id,completed:1})):() =>dispatch(updateTask({id:task.id,completed:0}))  }
                             ></div>
-                            <div className="task-content">
+                            <div style={{  "text-decoration": task.completed == 1?"line-through":""}} className="task-content">
                                 <h3>{task.title}</h3>
                                 <p>{task.text}</p>
                             </div>

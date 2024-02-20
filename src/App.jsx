@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import NotesPage from './Componenta/NotesPage';
 import { AiFillHome, AiOutlineSearch } from 'react-icons/ai';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faListCheck, faNoteSticky, faTrashCan, faUser, faUserLarge } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faListCheck, faNoteSticky, faPen, faPenAlt, faPenClip, faPenFancy, faTrashCan, faUser, faUserLarge } from '@fortawesome/free-solid-svg-icons';
 import { Link, Route, Routes } from 'react-router-dom';
 import TasksPage from './TasksPage';
 import HomePage from './HomePage';
@@ -24,9 +24,9 @@ function App(props) {
                         <div className='my-5 li  con'>
                             <h3 className="mx-2   brand-name ">
 
-                                <FontAwesomeIcon icon={faUserLarge} className='mx-3'/>
+                                <FontAwesomeIcon icon={faPenClip} className='mx-3'/>
         
-                                Kural</h3>
+                                NOTES APP</h3>
 
 
                         </div>
@@ -56,7 +56,7 @@ function App(props) {
                                     <FontAwesomeIcon icon={faListCheck} />
                                     <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{`Tasks`}</span></Link>
 
-                                <a href="/" className=" mt-5 fs-4 list-group-item  py2">
+                                {/* <a href="/" className=" mt-5 fs-4 list-group-item  py2">
 
                                     <FontAwesomeIcon icon={faBoxArchive} />
                                     <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{"Archive"}</span></a>
@@ -64,7 +64,7 @@ function App(props) {
                                 <a href="/" className="mt-5 fs-4 list-group-item  py2">
 
                                     <FontAwesomeIcon icon={faTrashCan} />
-                                    <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{"Bin"}</span></a>
+                                    <span className='d-none fs-4  mx-3 d-md-inline d-sm-inline d-lg-inline d-xl-inline' >{"Bin"}</span></a> */}
 
                             </div>
 

@@ -253,14 +253,18 @@ function SearchPage(props) {
                     <div className="card-container horizontal-card-list mt-1">
                         {SearchList.map((BoxVal) => (
                             <div key={BoxVal.id} className="card">
-                                <div className="card-body">
+                                <div className="card-body ">
 
-                                    <div className="card-title">
+                                    <div className="card-title ">
                                         <h4 className='addnotetxt'> {BoxVal.content1}</h4>
 
-                                        <div className='btnicons '><FontAwesomeIcon icon={faPenClip} onClick={() => { handleEdit(BoxVal.id) }} />
-                                            <button className="deletebtn" onClick={() => { handleDelete(BoxVal.id) }}>
-                                                <FontAwesomeIcon icon={faTrashCan} />   </button>   </div>
+                                        <div className='btnicons '>
+                                            {/* <FontAwesomeIcon icon={faPenClip} onClick={() => { handleEdit(BoxVal.id) }} /> */}
+                                            {/* <button className="deletebtn" onClick={() => { handleDelete(BoxVal.id) }}>
+                                                <FontAwesomeIcon icon={faTrashCan} />   </button> 
+                                                 */}
+                                                 
+                                                  </div>
 
                                     </div>
 

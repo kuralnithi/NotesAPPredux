@@ -1,21 +1,14 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './TasksPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { faListCheck, faNoteSticky, faPenClip, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { deleteNote } from './Features/NotesSlice';
-
-
-
-
-
-
-
-
+import { deleteNote, getNote } from './Features/NotesSlice';
+import { getTask } from './Features/TaskSlice';
 
 
 
@@ -221,15 +214,22 @@ function HomePage(props) {
 
 
 
+    useEffect(()=>{
+        dispatch(getTask())
+        
+            },[])
 
 
+            useEffect(()=>{
 
-
+                dispatch(getNote())
+            
+            },[])
     return (
 
 
         <div>
-            <h1 className='mt-3 welcometxt'>Welcome kural</h1>
+            <h1 className='mt-3 welcometxt'> </h1>
             <div className='display-container mt-5'>
                 <h1 className='mynotes'> <FontAwesomeIcon icon={faNoteSticky} /> My Notes</h1>
 
@@ -242,9 +242,11 @@ function HomePage(props) {
                                     <div className="card-title">
                                         <h5 className='addnotetxt  '> {BoxVal.content1}</h5>
 
-                                        <div className='btnicons '><FontAwesomeIcon icon={faPenClip} onClick={() => { handleEdit(BoxVal.id) }} />
+                                        <div className='btnicons '>
+                                            {/* <FontAwesomeIcon icon={faPenClip} onClick={() => { handleEdit(BoxVal.id) }} /> */}
                                             <button className="deletebtn" onClick={() => { handleDelete(BoxVal.id) }}>
-                                                <FontAwesomeIcon icon={faTrashCan} />   </button>   </div>
+                                                <FontAwesomeIcon icon={faTrashCan} />   </button>  
+                                                 </div>
 
                                     </div>
 
@@ -321,21 +323,21 @@ function HomePage(props) {
 
                     {taskList.length > 0 ? (
                         taskList.map((task) => (
-                            <div key={task.id} className="mt-4 task-item">
-                                <div
+                            <div key={task.id} className="mt-4 task-item ">
+                                {/* <div
                                     className={`task-checkbox  ${task.completed ? 'checked' : ''}`}
                                     onClick={() => {
                                     }}
-                                ></div>
-                                <div className="task-content">
-                                    <h3>{task.title}</h3>
-                                    <p>{task.text}</p>
+                                ></div> */}
+                                <div  className="task-content ">
+                                    <h3 style={{  "text-decoration": task.completed == 1?"line-through":""}}>{task.title}</h3>
+                                    <p>{`STATUS : ${task.completed ==0 ?"Pending":"Completed"}`}</p>
                                 </div>
                                 <div
                                     className="delete-button "
                                     onClick={() => handleDeleteTask(task.id)}
                                 >
-                                    <FontAwesomeIcon icon={faTrashCan} />
+                                    {/* <FontAwesomeIcon icon={faTrashCan} /> */}
 
                                 </div>
                             </div>

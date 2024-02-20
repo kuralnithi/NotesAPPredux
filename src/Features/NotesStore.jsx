@@ -10,7 +10,6 @@ export const store = configureStore({
         NotesPageReducer: NotesReducer,
         tasks: taskReducer
 
-    
     }
 
 })

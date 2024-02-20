@@ -1,10 +1,11 @@
 import { faNoteSticky, faPenClip, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { v4 as uuidv4 } from 'uuid';
-import { addNote, deleteNote, editNote } from '../Features/NotesSlice';
+import { addNote, deleteNote, editNote, getNote } from '../Features/NotesSlice';
+import { startTransition } from 'react';
 
 
 
@@ -21,16 +22,13 @@ function NotesPage(props) {
     const [editedContent, setEditedcontent] = useState('');
     const [editId, setEditid] = useState('');
 
-    const DispBoxVal = useSelector((state) => state.NotesPageReducer)
-    const dispatch = useDispatch()
-
+    const DispBoxVal = useSelector((state) => state.NotesPageReducer);
+    console.log("DB",DispBoxVal);
+    const dispatch = useDispatch();
     //////////////////////////////////////
     const handleChange = (e) => {
 
-
         setInptxt(e.target.value);
-
-
 
     }
 
@@ -57,7 +55,6 @@ function NotesPage(props) {
             id: uuidv4(),
             content1: inptxt,
             content2: inptxt2
-
         }
         dispatch(addNote(data))
 
@@ -72,7 +69,7 @@ function NotesPage(props) {
     ////////////////////////////////////
 
     const handleDelete = (id) => {
-        
+    
         dispatch(deleteNote(id));
 
 
@@ -170,6 +167,12 @@ function NotesPage(props) {
         setEditmode(false);
 
     }
+
+useEffect(()=>{
+
+    dispatch(getNote())
+
+},[])
 
 
     return (
