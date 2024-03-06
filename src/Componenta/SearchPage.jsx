@@ -308,7 +308,6 @@ function SearchPage(props) {
 
 
 
-
         </div>
     );
 }

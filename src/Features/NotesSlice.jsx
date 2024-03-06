@@ -90,11 +90,18 @@ const notesSlice = createSlice({
         console.log("getted note", action.payload);
         state.length = 0;
         action.payload.map((obj) => {
+
           state.push(obj);
+
         });
       });
   },
 });
+
+
+
+
+
 
 // reducers: {
 //     addNote: (state, action) => {

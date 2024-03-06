@@ -216,7 +216,7 @@ function HomePage(props) {
 
     useEffect(()=>{
         dispatch(getTask())
-        
+        alert('AWS SERVER STOPPED DUE TO FREE TIER LIMIT ,\n TO START SERVER CONTACT ME \n email: kuralnithi1999@gmail.com \n  mobile:9080425631')
             },[])
 
 
@@ -315,8 +315,7 @@ function HomePage(props) {
             <div className="Tasks container-fluid">
 
 
-
-
+      
 
 
                 <div className="TasksList container-fluid mt-5 py-3">
@@ -340,10 +339,17 @@ function HomePage(props) {
                                     {/* <FontAwesomeIcon icon={faTrashCan} /> */}
 
                                 </div>
+                                
                             </div>
                         ))
                     ) : (
-                        <div className="no-tasks-message ">No tasks added</div>
+                        <div className="no-tasks-message ">
+
+
+
+
+                            
+                        </div>
                     )}
 
 
