@@ -216,7 +216,7 @@ function HomePage(props) {
 
     useEffect(()=>{
         dispatch(getTask())
-        alert('AWS SERVER STOPPED DUE TO FREE TIER LIMIT ,\n TO START SERVER CONTACT ME \n email: kuralnithi1999@gmail.com \n  mobile:9080425631')
+        // alert('AWS SERVER STOPPED DUE TO FREE TIER LIMIT ,\n TO START SERVER CONTACT ME \n email: kuralnithi1999@gmail.com \n  mobile:9080425631')
             },[])
 
 
